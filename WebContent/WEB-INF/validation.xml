@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC
+     "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN"
+     "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+
+	<global>
+		<constant>
+			<constant-name>Mask Code</constant-name>
+			<constant-value>^[0-9a-zA-Z]*$</constant-value>
+		</constant>
+	</global>
+
+	<formset>
+		<form name="registrationForm">
+			<field property="userName" depends="required, mask, maxlength">
+				<msg name="mask" key="registration.errors.invalid" />
+				<arg position="0" key="registration.form.userName" />
+				<arg position="1" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${Mask Code}</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>128</var-value>
+				</var>
+			</field>
+			<field property="password" depends="required, mask, maxlength, minlength">
+				<msg name="mask" key="registration.errors.invalid" />
+				<msg name="minlength" key="registration.errors.minlength" />
+				<arg position="0" key="registration.form.password" />
+				<arg position="1" key="${var:maxlength}" resource="false" />
+				<arg position="2" key="${var:minlength}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${Mask Code}</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>128</var-value>
+				</var>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>6</var-value>
+				</var>
+			</field>
+			<field property="displayName" depends="required, maxlength">
+				<arg position="0" key="registration.form.displayName" />
+				<arg position="1" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>128</var-value>
+				</var>
+			</field>
+			<field property="introduction" depends="maxlength">
+				<arg position="0" key="registration.form.introduction" />
+				<arg position="1" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2048</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="loginForm">
+			<field property="userName" depends="required">
+				<arg position="0" key="login.form.userName" />
+			</field>
+			<field property="password" depends="required">
+				<arg position="0" key="login.form.password" />
+			</field>
+		</form>
+	</formset>
+
+</form-validation>

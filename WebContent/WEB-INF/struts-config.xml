@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<!-- ================================================ Form Bean Definitions -->
+	<form-beans>
+		<form-bean name="emptyForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+		</form-bean>
+		<form-bean name="registrationForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userName" type="java.lang.String" />
+			<form-property name="displayName" type="java.lang.String" />
+			<form-property name="password" type="java.lang.String" />
+			<form-property name="introduction" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="loginForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userName" type="java.lang.String" />
+			<form-property name="password" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="tweetForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="tweet" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="favoriteForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="tweetId" type="java.lang.Long" />
+			<form-property name="favorite" type="java.lang.Boolean" />
+		</form-bean>
+		<form-bean name="profileForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId" type="java.lang.Long" />
+			<form-property name="method" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="searchForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="searchValue" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="messageForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId" type="java.lang.Long" />
+		</form-bean>
+		<form-bean name="sendMessageForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="reciveUserId" type="java.lang.Long" />
+			<form-property name="message" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="reciveMessageForm"
+			type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="reciveUserId" type="java.lang.Long" />
+		</form-bean>
+	</form-beans>
+
+	<!-- ========================================= Global Exception Definitions -->
+	<global-exceptions>
+		<!-- sample exception handler <exception key="expired.password" type="app.ExpiredPasswordException"
+			path="/changePassword.jsp"/> end sample -->
+	</global-exceptions>
+
+	<!-- =========================================== Global Forward Definitions -->
+	<global-forwards>
+		<forward name="welcome" path="/welcome.do" />
+	</global-forwards>
+
+	<!-- =========================================== Action Mapping Definitions -->
+	<action-mappings>
+		<action path="/welcome"
+			type="moscowmule2240.java009.action.WelcomeAction">
+			<forward name="welcome" path="/pages/welcome.jsp" />
+			<forward name="home" path="/pages/home.jsp" />
+			<forward name="error" path="/pages/welcome.jsp" />
+		</action>
+		<action path="/accountregistration" type="org.apache.struts.actions.ForwardAction"
+			name="emptyForm" scope="request" parameter="/pages/registration.jsp" />
+		<action path="/registration"
+			type="moscowmule2240.java009.action.RegistrationAction"
+			name="registrationForm" validate="true" input="/pages/registration.jsp"
+			scope="request">
+			<forward name="success" path="/login.do" />
+			<forward name="error" path="/pages/registration.jsp" />
+		</action>
+		<action path="/login"
+			type="moscowmule2240.java009.action.LoginAction"
+			name="loginForm" validate="true" input="/pages/welcome.jsp" scope="request">
+			<forward name="success" path="/pages/home.jsp" />
+			<forward name="error" path="/pages/welcome.jsp" />
+		</action>
+		<action path="/logout"
+			type="moscowmule2240.java009.action.LogoutAction"
+			name="emptyForm" scope="request">
+			<forward name="success" path="/pages/logout.jsp" />
+			<forward name="error" path="/pages/logout.jsp" />
+		</action>
+		<action path="/home"
+			type="moscowmule2240.java009.action.HomeAction"
+			name="emptyForm" scope="request">
+		</action>
+		<action path="/tweet"
+			type="moscowmule2240.java009.action.TweetAction"
+			name="tweetForm" scope="request">
+		</action>
+		<action path="/favorite"
+			type="moscowmule2240.java009.action.FavoriteAction"
+			name="favoriteForm" scope="request">
+			<forward name="success" path="/home.do" />
+			<forward name="error" path="/home.do" />
+		</action>
+		<action path="/profile"
+			type="moscowmule2240.java009.action.ProfileAction"
+			name="profileForm" validate="true" input="/pages/profile.jsp" scope="request">
+			<forward name="success" path="/pages/profile.jsp" />
+			<forward name="error" path="/pages/profile.jsp" />
+		</action>
+		<action path="/search"
+			type="moscowmule2240.java009.action.SearchAction"
+			name="searchForm" validate="true" input="/pages/search.jsp" scope="request"
+			parameter="dispatch">
+			<forward name="success" path="/pages/search.jsp" />
+			<forward name="error" path="/pages/search.jsp" />
+		</action>
+		<action path="/address"
+			type="moscowmule2240.java009.action.AddressAction"
+			name="emptyForm" scope="request">
+		</action>
+		<action path="/message"
+			type="moscowmule2240.java009.action.MessageAction"
+			name="messageForm" scope="request">
+			<forward name="success" path="/pages/message.jsp" />
+			<forward name="error" path="/pages/message.jsp " />
+		</action>
+		<action path="/sendMessage"
+			type="moscowmule2240.java009.action.SendMessageAction"
+			name="sendMessageForm" scope="request" />
+		<action path="/reciveMessage"
+			type="moscowmule2240.java009.action.ReciveMessageAction"
+			name="reciveMessageForm" scope="request" />
+	</action-mappings>
+
+	<controller processorClass="org.springframework.web.struts.AutowiringRequestProcessor" />
+
+	<!-- ======================================== Message Resources Definitions -->
+	<message-resources
+		parameter="moscowmule2240.java009.resources.MessageResources"
+		null="false" />
+
+	<!-- =============================================== Plug Ins Configuration -->
+
+	<!-- ======================================================= Tiles plugin -->
+	<!-- This plugin initialize Tiles definition factory. This later can takes
+		some parameters explained here after. The plugin first read parameters from
+		web.xml, thenoverload them with parameters defined here. All parameters are
+		optional. The plugin should be declared in each struts-config file. - definitions-config:
+		(optional) Specify configuration file names. There can be several comma separated
+		file names (default: ?? ) - moduleAware: (optional - struts1.1) Specify if
+		the Tiles definition factory is module aware. If true (default), there will
+		be one factory for each Struts module. If false, there will be one common
+		factory for all module. In this later case, it is still needed to declare
+		one plugin per module. The factory will be initialized with parameters found
+		in the first initialized plugin (generally the one associated with the default
+		module). true : One factory per module. (default) false : one single shared
+		factory for all modules - definitions-parser-validate: (optional) Specify
+		if xml parser should validate the Tiles configuration file. true : validate.
+		DTD should be specified in file header (default) false : no validation Paths
+		found in Tiles definitions are relative to the main context. To use this
+		plugin, download and add the Tiles jar to your WEB-INF/lib directory then
+		uncomment the plugin definition below. <plug-in className="org.apache.struts.tiles.TilesPlugin"
+		> <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml"
+		/> <set-property property="moduleAware" value="true" /> </plug-in> -->
+
+	<!-- =================================================== Validator plugin -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/org/apache/struts/validator/validator-rules.xml, /WEB-INF/validation.xml" />
+	</plug-in>
+
+</struts-config>
